@@ -54,6 +54,7 @@ export const Testimonial = ({ data }: { data: PageBlocksTestimonial }) => {
         {/* Testimonial content */}
         <div
           key={activeIndex}
+          aria-live="polite"
           className="max-w-2xl text-center"
           style={{ '--slide-from': direction === 'right' ? '24px' : '-24px', animation: 'testimonial-slide-in 300ms ease' } as React.CSSProperties}
         >
