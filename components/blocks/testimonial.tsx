@@ -1,50 +1,128 @@
-import React from "react";
-import type { Template } from "tinacms";
-import { PageBlocksTestimonial, PageBlocksTestimonialTestimonials } from "../../tina/__generated__/types";
-import { Section } from "../layout/section";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Card, CardContent } from "../ui/card";
-import { tinaField } from "tinacms/dist/react";
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import type { Template } from 'tinacms';
+import {
+  PageBlocksTestimonial,
+  PageBlocksTestimonialTestimonials,
+} from '../../tina/__generated__/types';
+import { Section } from '../layout/section';
+import { tinaField } from 'tinacms/dist/react';
 import { sectionBlockSchemaField } from '../layout/section';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const Testimonial = ({ data }: { data: PageBlocksTestimonial }) => {
+  const testimonials = data.testimonials ?? [];
+  const total = testimonials.length;
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [direction, setDirection] = useState<'left' | 'right'>('right');
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  // Reset to slide-in position, then animate to center
+  useEffect(() => {
+    // Start off-screen
+    setIsAnimating(true);
+    const timeout = setTimeout(() => setIsAnimating(false), 20);
+    return () => clearTimeout(timeout);
+  }, [activeIndex]);
+
+  const goNext = () => {
+    setDirection('right');
+    setActiveIndex((prev) => (prev + 1) % total);
+  };
+
+  const goPrev = () => {
+    setDirection('left');
+    setActiveIndex((prev) => (prev - 1 + total) % total);
+  };
+
+  if (total === 0) return null;
+
+  const testimonial = testimonials[activeIndex]!;
+
+  // Animation: start offset + transparent, transition to center + opaque
+  const slideStyle: React.CSSProperties = {
+    transform: isAnimating
+      ? `translateX(${direction === 'right' ? '24px' : '-24px'})`
+      : 'translateX(0)',
+    opacity: isAnimating ? 0 : 1,
+    transition: 'transform 300ms ease, opacity 300ms ease',
+  };
+
   return (
     <Section background={data.background!}>
-      <div className="text-center">
-        <h2 className="text-title text-3xl font-semibold" data-tina-field={tinaField(data, 'title')}>{data.title}</h2>
-        <p className="text-body mt-6" data-tina-field={tinaField(data, 'description')}>{data.description}</p>
+      <div className="text-center mb-16">
+        <h2
+          className="font-headline text-5xl md:text-6xl text-on-surface"
+          data-tina-field={tinaField(data, 'title')}
+        >
+          {data.title}
+        </h2>
+        {data.description && (
+          <p
+            className="font-body text-on-surface-variant mt-6 italic leading-relaxed max-w-xl mx-auto"
+            data-tina-field={tinaField(data, 'description')}
+          >
+            {data.description}
+          </p>
+        )}
       </div>
-      <div className="mt-8 [column-width:300px] [column-gap:1.5rem] md:mt-12">
-        {data.testimonials?.map((testimonial, index) => (
-          <TestimonialCard key={index} testimonial={testimonial!} />
-        ))}
+
+      <div className="flex flex-col items-center">
+        {/* Testimonial content */}
+        <div className="max-w-2xl text-center" style={slideStyle}>
+          {/* Decorative quote mark */}
+          <div className="font-headline text-7xl md:text-8xl text-primary-container leading-none select-none">
+            &ldquo;
+          </div>
+
+          {/* Quote */}
+          <blockquote data-tina-field={tinaField(testimonial, 'quote')}>
+            <p className="font-headline italic text-xl md:text-2xl lg:text-3xl text-on-surface-variant leading-relaxed">
+              {testimonial.quote}
+            </p>
+          </blockquote>
+
+          {/* Author */}
+          <p className="mt-8 font-label text-xs uppercase tracking-[0.2em] text-outline">
+            <span data-tina-field={tinaField(testimonial, 'author')}>
+              {testimonial.author}
+            </span>
+            {testimonial.role && (
+              <>
+                <span className="mx-2">&middot;</span>
+                <span data-tina-field={tinaField(testimonial, 'role')}>
+                  {testimonial.role}
+                </span>
+              </>
+            )}
+          </p>
+        </div>
+
+        {/* Counter navigation */}
+        {total > 1 && (
+          <div className="flex items-center gap-6 mt-12">
+            <button
+              onClick={goPrev}
+              aria-label="Previous testimonial"
+              className="flex items-center justify-center size-11 text-primary hover:text-on-surface transition-colors duration-300"
+            >
+              <ChevronLeft className="size-5" />
+            </button>
+            <span className="font-label text-xs uppercase tracking-[0.2em] text-outline tabular-nums">
+              {activeIndex + 1} / {total}
+            </span>
+            <button
+              onClick={goNext}
+              aria-label="Next testimonial"
+              className="flex items-center justify-center size-11 text-primary hover:text-on-surface transition-colors duration-300"
+            >
+              <ChevronRight className="size-5" />
+            </button>
+          </div>
+        )}
       </div>
     </Section>
-  );
-};
-
-const TestimonialCard = ({ testimonial }: { testimonial: PageBlocksTestimonialTestimonials }) => {
-  return (
-    <Card className="mb-6 break-inside-avoid">
-      <CardContent className="grid grid-cols-[auto_1fr] gap-3 pt-6">
-        <Avatar className="size-9" data-tina-field={tinaField(testimonial, 'avatar')}>
-          {testimonial.avatar && (
-            <AvatarImage alt={testimonial.author!} src={testimonial.avatar} loading="lazy" width="120" height="120" />
-          )}
-          <AvatarFallback>{testimonial.author!.split(" ").map((word) => word[0]).join("")}</AvatarFallback>
-        </Avatar>
-
-        <div>
-          <h3 className="font-medium" data-tina-field={tinaField(testimonial, 'author')}>{testimonial.author}</h3>
-
-          <span className="text-muted-foreground block text-sm tracking-wide" data-tina-field={tinaField(testimonial, 'role')}>{testimonial.role}</span>
-
-          <blockquote className="mt-3" data-tina-field={tinaField(testimonial, 'quote')}>
-            <p className="text-gray-700 dark:text-gray-300">{testimonial.quote}</p>
-          </blockquote>
-        </div>
-      </CardContent>
-    </Card>
   );
 };
 
@@ -54,11 +132,28 @@ export const testimonialBlockSchema: Template = {
   ui: {
     previewSrc: "/blocks/testimonial.png",
     defaultItem: {
+      background: "bg-surface",
+      title: "Words from our guests",
+      description:
+        "Every retreat leaves a lasting imprint. Here's what our community has to say.",
       testimonials: [
         {
           quote:
-            "There are only two hard things in Computer Science: cache invalidation and naming things.",
-          author: "Phil Karlton",
+            "I arrived exhausted and left feeling like myself again. The silence, the space, the intention behind everything — it was exactly what I needed.",
+          author: "Maya Chen",
+          role: "Returning Guest",
+        },
+        {
+          quote:
+            "The morning yoga sessions changed something in me I can't quite name. I came for relaxation and left with clarity.",
+          author: "Lena Park",
+          role: "First-Time Guest",
+        },
+        {
+          quote:
+            "Every detail felt intentional — from the meals to the journaling prompts. I've never felt so held.",
+          author: "Sofia Reyes",
+          role: "Weekend Retreat",
         },
       ],
     },
@@ -85,14 +180,14 @@ export const testimonialBlockSchema: Template = {
       name: "testimonials",
       ui: {
         defaultItem: {
-          quote: "There are only two hard things in Computer Science: cache invalidation and naming things.",
-          author: "Phil Karlton",
+          quote:
+            "This retreat gave me the space to breathe and the clarity to move forward.",
+          author: "Guest Name",
+          role: "Retreat Attendee",
         },
-        itemProps: (item) => {
-          return {
-            label: `${item.quote} - ${item.author}`,
-          };
-        },
+        itemProps: (item) => ({
+          label: `${item.author} — ${item.quote?.substring(0, 40)}...`,
+        }),
       },
       fields: [
         {
@@ -113,11 +208,6 @@ export const testimonialBlockSchema: Template = {
           label: "Role",
           name: "role",
         },
-        {
-          type: "image",
-          label: "Avatar",
-          name: "avatar",
-        }
       ],
     },
   ],
