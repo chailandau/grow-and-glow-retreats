@@ -57,6 +57,7 @@ export const Testimonial = ({ data }: { data: PageBlocksTestimonial }) => {
         {/* Grid stack: all testimonials in same cell so tallest sets the height */}
         <div className="grid w-full text-center">
           {testimonials.map((t, i) => {
+            if (!t) return null;
             const isActive = i === activeIndex;
             return (
               <div

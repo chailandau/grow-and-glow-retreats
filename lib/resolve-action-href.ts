@@ -1,9 +1,19 @@
-export function resolveActionHref(action: {
+type Action = {
+  __typename?: string | null;
   _template?: string | null;
   page?: { _sys?: { breadcrumbs?: string[] } } | null;
   link?: string | null;
-}): string {
-  if (action._template === 'externalAction') {
+};
+
+function isExternal(action: Action): boolean {
+  return (
+    action.__typename?.includes('ExternalAction') === true ||
+    action._template === 'externalAction'
+  );
+}
+
+export function resolveActionHref(action: Action): string {
+  if (isExternal(action)) {
     return action.link || '#';
   }
   // Internal: reference field resolves to a Page object with _sys.breadcrumbs
@@ -14,8 +24,6 @@ export function resolveActionHref(action: {
   return `/${slug}`;
 }
 
-export function isExternalAction(action: {
-  _template?: string | null;
-}): boolean {
-  return action._template === 'externalAction';
+export function isExternalAction(action: Action): boolean {
+  return isExternal(action);
 }
