@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import type { Template } from 'tinacms';
 import {
   PageBlocksTestimonial,
@@ -16,15 +16,6 @@ export const Testimonial = ({ data }: { data: PageBlocksTestimonial }) => {
   const total = testimonials.length;
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState<'left' | 'right'>('right');
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  // Reset to slide-in position, then animate to center
-  useEffect(() => {
-    // Start off-screen
-    setIsAnimating(true);
-    const timeout = setTimeout(() => setIsAnimating(false), 20);
-    return () => clearTimeout(timeout);
-  }, [activeIndex]);
 
   const goNext = () => {
     setDirection('right');
@@ -39,15 +30,6 @@ export const Testimonial = ({ data }: { data: PageBlocksTestimonial }) => {
   if (total === 0) return null;
 
   const testimonial = testimonials[activeIndex]!;
-
-  // Animation: start offset + transparent, transition to center + opaque
-  const slideStyle: React.CSSProperties = {
-    transform: isAnimating
-      ? `translateX(${direction === 'right' ? '24px' : '-24px'})`
-      : 'translateX(0)',
-    opacity: isAnimating ? 0 : 1,
-    transition: 'transform 300ms ease, opacity 300ms ease',
-  };
 
   return (
     <Section background={data.background!}>
@@ -70,7 +52,11 @@ export const Testimonial = ({ data }: { data: PageBlocksTestimonial }) => {
 
       <div className="flex flex-col items-center">
         {/* Testimonial content */}
-        <div className="max-w-2xl text-center" style={slideStyle}>
+        <div
+          key={activeIndex}
+          className="max-w-2xl text-center"
+          style={{ '--slide-from': direction === 'right' ? '24px' : '-24px', animation: 'testimonial-slide-in 300ms ease' } as React.CSSProperties}
+        >
           {/* Decorative quote mark */}
           <div className="font-headline text-7xl md:text-8xl text-primary-container leading-none select-none">
             &ldquo;
