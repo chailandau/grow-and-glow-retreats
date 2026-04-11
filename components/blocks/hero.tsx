@@ -1,103 +1,92 @@
 'use client';
-import { iconSchema } from '@/tina/fields/icon';
+import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import * as React from 'react';
 import type { Template } from 'tinacms';
 import { tinaField } from 'tinacms/dist/react';
-import { PageBlocksHero, PageBlocksHeroImage } from '../../tina/__generated__/types';
-import { Icon } from '../icon';
+import { resolveActionHref, isExternalAction } from '@/lib/resolve-action-href';
+import { actionsFieldSchema } from '@/tina/fields/actions';
+import { PageBlocksHero } from '../../tina/__generated__/types';
 import { Section, sectionBlockSchemaField } from '../layout/section';
 import { Button } from '../ui/button';
-import HeroVideoDialog from '../ui/hero-video-dialog';
 
 export const Hero = ({ data }: { data: PageBlocksHero }) => {
-  // Extract the background style logic into a more readable format
-  let gradientStyle: React.CSSProperties | undefined = undefined;
-  if (data.background) {
-    const colorName = data.background
-      .replace(/\/\d{1,2}$/, '')
-      .split('-')
-      .slice(1)
-      .join('-');
-    const opacity = data.background.match(/\/(\d{1,3})$/)?.[1] || '100';
-
-    gradientStyle = {
-      '--tw-gradient-to': `color-mix(in oklab, var(--color-${colorName}) ${opacity}%, transparent)`,
-    } as React.CSSProperties;
-  }
-
   return (
-    <Section background={data.background!}>
-      <div className='text-center sm:mx-auto lg:mr-auto lg:mt-0'>
-        {data.headline && (
-          <div data-tina-field={tinaField(data, 'headline')}>
-            <h1 className='mt-8 text-balance text-6xl md:text-7xl xl:text-[5.25rem]'>
-              {data.headline!}
-            </h1>
-          </div>
-        )}
-        {data.tagline && (
-          <div data-tina-field={tinaField(data, 'tagline')}>
-            <p className='mx-auto mt-8 max-w-2xl text-balance text-lg'>
-              {data.tagline!}
-            </p>
-          </div>
-        )}
+    <Section background={data.background!} className="min-h-[80vh] flex items-center py-8 md:py-16">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 w-full items-center">
+        {/* Text Column */}
+        <div className="lg:col-span-5 z-10">
+          {data.tagline && (
+            <div data-tina-field={tinaField(data, 'tagline')}>
+              <span className="font-label text-xs uppercase tracking-[0.3em] text-primary mb-6 block">
+                {data.tagline!}
+              </span>
+            </div>
+          )}
+          {data.headline && (
+            <div data-tina-field={tinaField(data, 'headline')}>
+              <h1 className="font-headline text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-on-surface mb-8">
+                {data.headline!}
+              </h1>
+            </div>
+          )}
+          {data.text && (
+            <div data-tina-field={tinaField(data, 'text')}>
+              <p className="font-body text-lg md:text-xl text-on-surface-variant leading-relaxed max-w-md">
+                {data.text!}
+              </p>
+            </div>
+          )}
 
-        <div className='mt-12 flex flex-col items-center justify-center gap-2 md:flex-row'>
-          {data.actions &&
-            data.actions.map((action) => (
-              <div key={action!.label} data-tina-field={tinaField(action)} className='bg-foreground/10 rounded-[calc(var(--radius-xl)+0.125rem)] border p-0.5'>
-                <Button asChild size='lg' variant={action!.type === 'link' ? 'ghost' : 'default'} className='rounded-xl px-5 text-base'>
-                  <Link href={action!.link!}>
-                    {action?.icon && <Icon data={action?.icon} />}
-                    <span className='text-nowrap'>{action!.label}</span>
-                  </Link>
-                </Button>
-              </div>
-            ))}
+          <div className="flex items-center gap-8 mt-10">
+            {data.actions &&
+              data.actions.map((action) => {
+                const href = resolveActionHref(action!);
+                const isExternal = isExternalAction(action!);
+                const externalProps = isExternal ? { target: '_blank' as const, rel: 'noopener noreferrer' } : {};
+                return (
+                  <div key={action!.label} data-tina-field={tinaField(action)}>
+                    {action!.type === 'link' ? (
+                      <Link
+                        href={href}
+                        {...externalProps}
+                        className="inline-flex items-center gap-2 font-label text-xs uppercase tracking-widest border-b border-primary pb-1 text-primary hover:text-on-surface transition-colors duration-300"
+                      >
+                        <span>{action!.label}</span>
+                        <ArrowRight className="size-4" />
+                      </Link>
+                    ) : (
+                      <Button asChild>
+                        <Link href={href} {...externalProps}>
+                          <span>{action!.label}</span>
+                          <ArrowRight className="size-4" />
+                        </Link>
+                      </Button>
+                    )}
+                  </div>
+                );
+              })}
+          </div>
         </div>
+
+        {/* Image Column */}
+        {data.image?.src && (
+          <div className="lg:col-span-7 relative" data-tina-field={tinaField(data, 'image')}>
+            <div className="aspect-[7/5] overflow-hidden editorial-shadow">
+              <Image
+                className="w-full h-full object-cover"
+                alt={data.image.alt || ''}
+                src={data.image.src}
+                height={4000}
+                width={3000}
+              />
+            </div>
+          </div>
+        )}
       </div>
-
-      {data.image && (
-        <div className='relative -mr-56 mt-8 overflow-hidden px-2 sm:mr-0 sm:mt-12 md:mt-20 max-w-full' data-tina-field={tinaField(data, 'image')}>
-          <div aria-hidden className='bg-linear-to-b absolute inset-0 z-10 from-transparent from-35% pointer-events-none' style={gradientStyle} />
-          <div className='inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto max-w-6xl overflow-hidden rounded-2xl border p-4 shadow-lg shadow-zinc-950/15 ring-1'>
-            <ImageBlock image={data.image} />
-          </div>
-        </div>
-      )}
     </Section>
   );
-};
-
-const ImageBlock = ({ image }: { image: PageBlocksHeroImage }) => {
-  if (image.videoUrl) {
-    let videoId = '';
-    if (image.videoUrl) {
-      const embedPrefix = '/embed/';
-      const idx = image.videoUrl.indexOf(embedPrefix);
-      if (idx !== -1) {
-        videoId = image.videoUrl.substring(idx + embedPrefix.length).split('?')[0];
-      }
-    }
-    const thumbnailSrc = image.src ? image.src! : videoId ? `https://i3.ytimg.com/vi/${videoId}/maxresdefault.jpg` : '';
-
-    return <HeroVideoDialog videoSrc={image.videoUrl} thumbnailSrc={thumbnailSrc} thumbnailAlt='Hero Video' />;
-  }
-
-  if (image.src) {
-    return (
-      <Image
-        className='z-2 border-border/25 aspect-15/8 relative rounded-2xl border max-w-full h-auto'
-        alt={image!.alt || ''}
-        src={image!.src!}
-        height={4000}
-        width={3000}
-      />
-    );
-  }
 };
 
 export const heroBlockSchema: Template = {
@@ -106,9 +95,30 @@ export const heroBlockSchema: Template = {
   ui: {
     previewSrc: '/blocks/hero.png',
     defaultItem: {
-      tagline: "Here's some text above the other text",
-      headline: 'This Big Text is Totally Awesome',
-      text: 'Phasellus scelerisque, libero eu finibus rutrum, risus risus accumsan libero, nec molestie urna dui a leo.',
+      background: 'bg-orange-50/80',
+      tagline: "Est. 2024",
+      headline: 'Grow and Glow Retreats',
+      text: 'A curated sanctuary for the modern spirit. Rediscover your internal rhythm through architectural silence and intentional movement.',
+      actions: [
+        {
+          label: 'Book a Retreat',
+          type: 'button',
+          linkType: 'internal',
+          page: 'content/pages/home.mdx',
+          link: '',
+        },
+        {
+          label: 'Our Story',
+          type: 'link',
+          linkType: 'internal',
+          page: 'content/pages/about.mdx',
+          link: '',
+        },
+      ],
+      image: {
+        src: '/uploads/hero/retreat.jpg',
+        alt: 'Peaceful wellness retreat surrounded by nature',
+      },
     },
   },
   fields: [
@@ -124,46 +134,14 @@ export const heroBlockSchema: Template = {
       name: 'tagline',
     },
     {
-      label: 'Actions',
-      name: 'actions',
-      type: 'object',
-      list: true,
+      type: 'string',
+      label: 'Text',
+      name: 'text',
       ui: {
-        defaultItem: {
-          label: 'Action Label',
-          type: 'button',
-          icon: {
-              name: "Tina",
-              color: "white",
-              style: "float",
-          },
-          link: '/',
-        },
-        itemProps: (item) => ({ label: item.label }),
+        component: 'textarea',
       },
-      fields: [
-        {
-          label: 'Label',
-          name: 'label',
-          type: 'string',
-        },
-        {
-          label: 'Type',
-          name: 'type',
-          type: 'string',
-          options: [
-            { label: 'Button', value: 'button' },
-            { label: 'Link', value: 'link' },
-          ],
-        },
-        iconSchema as any,
-        {
-          label: 'Link',
-          name: 'link',
-          type: 'string',
-        },
-      ],
     },
+    actionsFieldSchema as any,
     {
       type: 'object',
       label: 'Image',
@@ -178,12 +156,6 @@ export const heroBlockSchema: Template = {
           name: 'alt',
           label: 'Alt Text',
           type: 'string',
-        },
-        {
-          name: 'videoUrl',
-          label: 'Video URL',
-          type: 'string',
-          description: 'If using a YouTube video, make sure to use the embed version of the video URL',
         },
       ],
     },
