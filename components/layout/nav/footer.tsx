@@ -9,26 +9,31 @@ export const Footer = () => {
   const { header, footer } = globalSettings!;
 
   return (
-    <footer className="border-b bg-white pt-20 dark:bg-transparent">
-      <div className="mx-auto max-w-5xl px-6">
-        <div className="mt-12 flex flex-wrap items-center gap-6 border-t py-6 flex-col md:flex-row md:justify-between">
+    <footer className="w-full pt-24 pb-12 bg-surface-container-low border-t border-outline-variant/20">
+      <div className="mx-auto max-w-screen-2xl px-6 md:px-12">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
 
-          <div className="order-last flex justify-center md:order-first md:justify-start">
+          <div className="flex items-center gap-3">
             <Link href="/" aria-label="go home">
               <Icon
                 parentColor={header!.color!}
                 data={header!.icon}
               />
             </Link>
-            <span className="self-center text-muted-foreground text-sm ml-2">© {new Date().getFullYear()} {header?.name}, All rights reserved</span>
+            <span className="font-headline italic text-muted-foreground">{header?.name}</span>
           </div>
 
-          <div className="order-first flex justify-center gap-6 text-sm md:order-last md:justify-end">
-            {footer?.social?.map((link, index) => (
-              <Link key={`${link!.icon}${index}`} href={link!.url!} target="_blank" rel="noopener noreferrer" >
-                <Icon data={{ ...link!.icon, size: 'small' }} className="text-muted-foreground hover:text-primary block" />
-              </Link>
-            ))}
+          <div className="flex flex-col items-center md:items-end gap-6">
+            <div className="flex gap-8">
+              {footer?.social?.map((link, index) => (
+                <Link key={`${link!.icon}${index}`} href={link!.url!} target="_blank" rel="noopener noreferrer" >
+                  <Icon data={{ ...link!.icon, size: 'small' }} className="text-muted-foreground hover:text-primary block transition-colors duration-300" />
+                </Link>
+              ))}
+            </div>
+            <p className="font-label text-[10px] uppercase tracking-widest text-muted-foreground opacity-80">
+              &copy; {new Date().getFullYear()} {header?.name}. All Rights Reserved.
+            </p>
           </div>
 
         </div>

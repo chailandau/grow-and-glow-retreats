@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import { Inter as FontSans, Lato, Nunito } from "next/font/google";
+import { Newsreader, Outfit } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { VideoDialogProvider } from "@/components/ui/VideoDialogContext";
 import VideoDialog from "@/components/ui/VideoDialog";
@@ -8,25 +8,20 @@ import VideoDialog from "@/components/ui/VideoDialog";
 import "@/styles.css";
 import { TailwindIndicator } from "@/components/ui/breakpoint-indicator";
 
-const fontSans = FontSans({
+const newsreader = Newsreader({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-headline",
+  style: ["normal", "italic"],
 });
 
-const nunito = Nunito({
+const bodyFont = Outfit({
   subsets: ["latin"],
-  variable: "--font-nunito",
-});
-
-const lato = Lato({
-  subsets: ["latin"],
-  variable: "--font-lato",
-  weight: "400",
+  variable: "--font-body",
 });
 
 export const metadata: Metadata = {
-  title: "Tina",
-  description: "Tina Cloud Starter",
+  title: "Grow and Glow Retreats",
+  description: "A curated sanctuary for the modern spirit",
 };
 
 export default function RootLayout({
@@ -35,8 +30,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={cn(fontSans.variable, nunito.variable, lato.variable)}>
-      <body className="min-h-screen bg-background font-sans antialiased">
+    <html lang="en" className={cn(newsreader.variable, bodyFont.variable)}>
+      <body className="min-h-screen bg-background font-body text-lg antialiased selection:bg-primary-container selection:text-on-surface">
         <VideoDialogProvider>
           {children}
           <VideoDialog />

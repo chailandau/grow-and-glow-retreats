@@ -6,7 +6,8 @@ import { featureBlockSchema } from '@/components/blocks/features';
 import { videoBlockSchema } from '@/components/blocks/video';
 import { calloutBlockSchema } from '@/components/blocks/callout';
 import { statsBlockSchema } from '@/components/blocks/stats';
-import { ctaBlockSchema } from '@/components/blocks/call-to-action';
+import { textBlockSchema } from '@/components/blocks/call-to-action';
+import { imageTextBlockSchema } from '@/components/blocks/image-text';
 
 const Page: Collection = {
   label: 'Pages',
@@ -36,7 +37,8 @@ const Page: Collection = {
         calloutBlockSchema,
         featureBlockSchema,
         statsBlockSchema,
-        ctaBlockSchema,
+        textBlockSchema,
+        imageTextBlockSchema,
         contentBlockSchema,
         testimonialBlockSchema,
         videoBlockSchema,

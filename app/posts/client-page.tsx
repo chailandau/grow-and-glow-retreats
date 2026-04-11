@@ -7,7 +7,6 @@ import { TinaMarkdown } from 'tinacms/dist/rich-text';
 import { PostConnectionQuery, PostConnectionQueryVariables } from '@/tina/__generated__/types';
 import ErrorBoundary from '@/components/error-boundary';
 import { ArrowRight, UserRound } from 'lucide-react';
-import { Card } from '@/components/ui/card';
 import { Section } from '@/components/layout/section';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
@@ -44,86 +43,85 @@ export default function PostsClientPage(props: ClientPostProps) {
   return (
     <ErrorBoundary>
       <Section>
-        <div className="container flex flex-col items-center gap-16">
+        <div className="flex flex-col items-center gap-16">
           <div className="text-center">
-            <h2 className="mx-auto mb-6 text-pretty text-3xl font-semibold md:text-4xl lg:max-w-3xl">
-              Blog Posts
+            <h2 className="font-headline text-5xl md:text-6xl text-on-surface mb-6">
+              Journal
             </h2>
-            <p className="mx-auto max-w-2xl text-muted-foreground md:text-lg">
+            <p className="mx-auto max-w-2xl text-on-surface-variant font-body leading-relaxed italic">
               Discover the latest insights and tutorials about modern web development, UI design, and component-driven architecture.
             </p>
           </div>
 
-          <div className="grid gap-y-10 sm:grid-cols-12 sm:gap-y-12 md:gap-y-16 lg:gap-y-20">
+          <div className="grid gap-y-16 sm:grid-cols-12 lg:gap-y-24 w-full">
             {posts.map((post) => (
-              <Card
+              <div
                 key={post.id}
-                className="order-last border-0 bg-transparent shadow-none sm:order-first sm:col-span-12 lg:col-span-10 lg:col-start-2"
+                className="sm:col-span-12 lg:col-span-10 lg:col-start-2"
               >
-                <div className="grid gap-y-6 sm:grid-cols-10 sm:gap-x-5 sm:gap-y-0 md:items-center md:gap-x-8 lg:gap-x-12">
+                <div className="grid gap-y-6 sm:grid-cols-10 sm:gap-x-8 md:items-center lg:gap-x-12">
                   <div className="sm:col-span-5">
-                    <div className="mb-4 md:mb-6">
-                      <div className="flex flex-wrap gap-3 text-xs uppercase tracking-wider text-muted-foreground md:gap-5 lg:gap-6">
+                    <div className="mb-4">
+                      <div className="flex flex-wrap gap-3 font-label text-[10px] uppercase tracking-[0.3em] text-primary">
                         {post.tags?.map((tag) => <span key={tag}>{tag}</span>)}
                       </div>
                     </div>
-                    <h3 className="text-xl font-semibold md:text-2xl lg:text-3xl">
+                    <h3 className="font-headline text-2xl md:text-3xl text-on-surface">
                       <Link
                         href={post.url}
-                        className="hover:underline"
+                        className="hover:text-primary transition-colors duration-300"
                       >
                         {post.title}
                       </Link>
                     </h3>
-                    <div className="mt-4 text-muted-foreground md:mt-5">
+                    <div className="mt-4 text-on-surface-variant font-body leading-relaxed">
                       <TinaMarkdown content={post.excerpt} />
                     </div>
-                    <div className="mt-6 flex items-center space-x-4 text-sm md:mt-8">
-                      <Avatar>
+                    <div className="mt-6 flex items-center space-x-4 text-sm">
+                      <Avatar className="size-9">
                         {post.author.avatar && (
                           <AvatarImage
                             src={post.author.avatar}
                             alt={post.author.name}
-                            className="h-8 w-8"
                           />
                         )}
-                        <AvatarFallback>
-                          <UserRound size={16} strokeWidth={2} className="opacity-60" aria-hidden="true" />
+                        <AvatarFallback className="bg-surface-container-high text-on-surface-variant font-headline text-xs">
+                          <UserRound size={14} strokeWidth={2} className="opacity-60" aria-hidden="true" />
                         </AvatarFallback>
                       </Avatar>
-                      <span className="text-muted-foreground">{post.author.name}</span>
-                      <span className="text-muted-foreground">•</span>
-                      <span className="text-muted-foreground">
+                      <span className="text-on-surface-variant font-label text-xs">{post.author.name}</span>
+                      <span className="text-outline-variant">&middot;</span>
+                      <span className="text-muted-foreground font-label text-xs">
                         {post.published}
                       </span>
                     </div>
-                    <div className="mt-6 flex items-center space-x-2 md:mt-8">
+                    <div className="mt-6">
                       <Link
                         href={post.url}
-                        className="inline-flex items-center font-semibold hover:underline md:text-base"
+                        className="inline-flex items-center font-label text-xs uppercase tracking-widest text-primary border-b border-primary/20 hover:border-primary pb-1 transition-all duration-300"
                       >
                         <span>Read more</span>
-                        <ArrowRight className="ml-2 size-4 transition-transform" />
+                        <ArrowRight className="ml-2 size-3" />
                       </Link>
                     </div>
                   </div>
                   {post.heroImg && (
                     <div className="order-first sm:order-last sm:col-span-5">
-                      <Link href={post.url} className="block">
-                        <div className="aspect-[16/9] overflow-clip rounded-lg border border-border">
+                      <Link href={post.url} className="block group">
+                        <div className="aspect-[16/9] overflow-hidden">
                           <Image
                             width={533}
                             height={300}
                             src={post.heroImg}
                             alt={post.title}
-                            className="h-full w-full object-cover transition-opacity duration-200 fade-in hover:opacity-70"
+                            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                           />
                         </div>
                       </Link>
                     </div>
                   )}
                 </div>
-              </Card>
+              </div>
             ))}
           </div>
         </div>

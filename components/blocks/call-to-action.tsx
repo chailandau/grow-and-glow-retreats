@@ -24,7 +24,7 @@ export const Text = ({ data }: { data: PageBlocksText }) => {
                             <div
                                 key={action!.label}
                                 data-tina-field={tinaField(action)}>
-                                {action!.type === 'link' ? (
+                                {action!.style === 'link' ? (
                                     <Link
                                         href={href}
                                         {...externalProps}
@@ -62,18 +62,16 @@ export const textBlockSchema: Template = {
             description: "Receive private invitations to our upcoming retreats and seasonal reflections on growth and glowing from within.",
             actions: [
                 {
+                    _template: 'internalAction',
                     label: 'Reserve Your Spot',
-                    type: 'button',
-                    linkType: 'internal',
+                    style: 'button',
                     page: 'content/pages/home.mdx',
-                    link: '',
                 },
                 {
+                    _template: 'internalAction',
                     label: 'Learn More',
-                    type: 'link',
-                    linkType: 'internal',
+                    style: 'link',
                     page: 'content/pages/about.mdx',
-                    link: '',
                 },
             ],
         },

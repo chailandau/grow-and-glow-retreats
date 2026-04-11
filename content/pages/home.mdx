@@ -7,9 +7,9 @@ blocks:
     text: 'Not someday. Not once you''ve healed enough, done enough, become enough. You were always her. You just forgot.'
     actions:
       - label: I'm ready
-        type: button
-        linkType: internal
+        style: button
         page: content/pages/about.mdx
+        _template: internalAction
     image:
       src: /uploads/hero/retreat.jpg
       alt: Peaceful wellness retreat surrounded by nature
@@ -39,9 +39,9 @@ blocks:
       A life you claim with pride and love — the magical life you always dreamed of.
     actions:
       - label: Apply to Ignite
-        type: button
-        linkType: external
+        style: button
         link: /apply
+        _template: externalAction
     _template: imageText
   - background: bg-surface
     layout: imageRight
@@ -58,9 +58,9 @@ blocks:
       No pitch. No fluff. Just you, finally making space for yourself.
     actions:
       - label: Reserve your spot — it's free
-        type: button
-        linkType: external
+        style: button
         link: /apply
+        _template: externalAction
     _template: imageText
   - background: bg-white
     title: Title here
@@ -95,21 +95,21 @@ blocks:
       I’m Chav, a holistic transformation coach for women ready to come home to themselves.
     actions:
       - label: Learn More
-        type: link
-        linkType: internal
+        style: link
         page: content/pages/about.mdx
+        _template: internalAction
     _template: imageText
   - title: Start Building
     description: Get started with TinaCMS today and take your content management to the next level.
     actions:
-      - label: Get Started
-        type: button
-        linkType: internal
-        page: content/pages/home.mdx
-      - label: Book Demo
-        type: link
-        linkType: external
+      - label: Test
+        style: button
+        page: content/pages/about.mdx
+        _template: internalAction
+      - label: Test
+        style: link
         link: 'https://tina.io'
+        _template: externalAction
     _template: text
 ---
 

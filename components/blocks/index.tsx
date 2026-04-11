@@ -7,7 +7,8 @@ import { Testimonial } from "./testimonial";
 import { Video } from "./video";
 import { Callout } from "./callout";
 import { Stats } from "./stats";
-import { CallToAction } from "./call-to-action";
+import { Text } from "./call-to-action";
+import { ImageText } from "./image-text";
 
 export const Blocks = (props: Omit<Page, "id" | "_sys" | "_values">) => {
   if (!props.blocks) return null;
@@ -40,8 +41,10 @@ const Block = (block: PageBlocks) => {
       return <Features data={block} />;
     case "PageBlocksTestimonial":
       return <Testimonial data={block} />;
-    case "PageBlocksCta":
-      return <CallToAction data={block} />;
+    case "PageBlocksText":
+      return <Text data={block} />;
+    case "PageBlocksImageText":
+      return <ImageText data={block} />;
     default:
       return null;
   }

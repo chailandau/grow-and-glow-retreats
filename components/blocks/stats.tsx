@@ -7,17 +7,17 @@ import { sectionBlockSchemaField } from '../layout/section';
 export const Stats = ({ data }: { data: PageBlocksStats }) => {
     return (
         <Section background={data.background!}>
-            <div className="mx-auto max-w-5xl space-y-8 px-6 md:space-y-16">
+            <div className="mx-auto max-w-screen-xl space-y-16 md:space-y-24">
                 <div className="relative z-10 mx-auto max-w-xl space-y-6 text-center">
-                    <h2 className="text-4xl font-medium lg:text-5xl" data-tina-field={tinaField(data, 'title')}>{data.title}</h2>
-                    <p data-tina-field={tinaField(data, 'description')}>{data.description}</p>
+                    <h2 className="font-headline text-5xl md:text-6xl text-on-surface" data-tina-field={tinaField(data, 'title')}>{data.title}</h2>
+                    <p className="font-body text-on-surface-variant leading-relaxed" data-tina-field={tinaField(data, 'description')}>{data.description}</p>
                 </div>
 
-                <div className="grid divide-y *:text-center md:grid-cols-3 md:divide-x md:divide-y-0">
+                <div className="grid md:grid-cols-3 gap-12 md:gap-24">
                     {data.stats?.map((stat) => (
-                        <div key={stat?.type} className="space-y-4 py-4">
-                            <div className="text-5xl font-bold" data-tina-field={tinaField(stat, 'stat')}>{stat!.stat}</div>
-                            <p data-tina-field={tinaField(stat, 'type')}>{stat!.type}</p>
+                        <div key={stat?.type} className="text-center space-y-4 py-8">
+                            <div className="font-headline text-6xl md:text-7xl text-primary" data-tina-field={tinaField(stat, 'stat')}>{stat!.stat}</div>
+                            <p className="font-label text-xs uppercase tracking-widest text-muted-foreground" data-tina-field={tinaField(stat, 'type')}>{stat!.type}</p>
                         </div>
                     ))}
                 </div>
@@ -33,20 +33,21 @@ export const statsBlockSchema: Template = {
     ui: {
         previewSrc: "/blocks/stats.png",
         defaultItem: {
-            title: "TinaCMS by the numbers",
-            description: "TinaCMS is an open-source content management system that allows developers to create and manage content for their websites and applications. It provides a flexible and customizable framework for building content-driven applications.",
+            background: "bg-zinc-50",
+            title: "A legacy of transformation",
+            description: "Since our founding, Grow and Glow Retreats has guided thousands on their journey toward stillness, self-discovery, and renewal.",
             stats: [
                 {
-                    stat: "12K",
-                    type: "Stars on GitHub",
+                    stat: "2,400+",
+                    type: "Guests Welcomed",
                 },
                 {
-                    stat: "11K",
-                    type: "Active Users",
+                    stat: "120+",
+                    type: "Retreats Hosted",
                 },
                 {
-                    stat: "22K",
-                    type: "Powered Apps",
+                    stat: "98%",
+                    type: "Return Rate",
                 },
             ],
         },
@@ -70,8 +71,8 @@ export const statsBlockSchema: Template = {
             list: true,
             ui: {
                 defaultItem: {
-                    stat: "12K",
-                    type: "Stars on GitHub",
+                    stat: "100+",
+                    type: "Retreats Hosted",
                 },
                 itemProps: (item) => {
                     return {

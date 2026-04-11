@@ -29,8 +29,6 @@ export const Testimonial = ({ data }: { data: PageBlocksTestimonial }) => {
 
   if (total === 0) return null;
 
-  const testimonial = testimonials[activeIndex]!;
-
   return (
     <Section background={data.background!}>
       <div className="text-center mb-16">
@@ -50,40 +48,59 @@ export const Testimonial = ({ data }: { data: PageBlocksTestimonial }) => {
         )}
       </div>
 
-      <div className="flex flex-col items-center">
-        {/* Testimonial content */}
-        <div
-          key={activeIndex}
-          aria-live="polite"
-          className="max-w-2xl text-center"
-          style={{ '--slide-from': direction === 'right' ? '24px' : '-24px', animation: 'testimonial-slide-in 300ms ease' } as React.CSSProperties}
-        >
-          {/* Decorative quote mark */}
-          <div className="font-headline text-7xl md:text-8xl text-primary-container leading-none select-none">
-            &ldquo;
-          </div>
+      <div className="flex flex-col items-center max-w-2xl mx-auto">
+        {/* Decorative quote mark — static, outside the animation */}
+        <div className="font-headline text-7xl md:text-8xl text-primary-container leading-none select-none">
+          &ldquo;
+        </div>
 
-          {/* Quote */}
-          <blockquote data-tina-field={tinaField(testimonial, 'quote')}>
-            <p className="font-headline italic text-xl md:text-2xl lg:text-3xl text-on-surface-variant leading-relaxed">
-              {testimonial.quote}
-            </p>
-          </blockquote>
-
-          {/* Author */}
-          <p className="mt-8 font-label text-xs uppercase tracking-[0.2em] text-outline">
-            <span data-tina-field={tinaField(testimonial, 'author')}>
-              {testimonial.author}
-            </span>
-            {testimonial.role && (
-              <>
-                <span className="mx-2">&middot;</span>
-                <span data-tina-field={tinaField(testimonial, 'role')}>
-                  {testimonial.role}
-                </span>
-              </>
-            )}
-          </p>
+        {/* Grid stack: all testimonials in same cell so tallest sets the height */}
+        <div className="grid w-full text-center">
+          {testimonials.map((t, i) => {
+            const isActive = i === activeIndex;
+            return (
+              <div
+                key={i}
+                className={`col-start-1 row-start-1 flex flex-col justify-center ${isActive ? '' : 'invisible'}`}
+              >
+                {isActive ? (
+                  <div
+                    key={activeIndex}
+                    aria-live="polite"
+                    style={{ '--slide-from': direction === 'right' ? '24px' : '-24px', animation: 'testimonial-slide-in 300ms ease' } as React.CSSProperties}
+                  >
+                    <blockquote data-tina-field={tinaField(t, 'quote')}>
+                      <p className="font-headline italic text-xl md:text-2xl lg:text-3xl text-on-surface-variant leading-relaxed">
+                        {t.quote}
+                      </p>
+                    </blockquote>
+                    <p className="mt-8 font-label text-xs uppercase tracking-[0.2em] text-outline">
+                      <span data-tina-field={tinaField(t, 'author')}>
+                        {t.author}
+                      </span>
+                      {t.role && (
+                        <>
+                          <span className="mx-2">&middot;</span>
+                          <span data-tina-field={tinaField(t, 'role')}>
+                            {t.role}
+                          </span>
+                        </>
+                      )}
+                    </p>
+                  </div>
+                ) : (
+                  <div aria-hidden="true">
+                    <p className="font-headline italic text-xl md:text-2xl lg:text-3xl leading-relaxed">
+                      {t.quote}
+                    </p>
+                    <p className="mt-8 font-label text-xs uppercase tracking-[0.2em]">
+                      {t.author}{t.role && <><span className="mx-2">&middot;</span>{t.role}</>}
+                    </p>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
 
         {/* Counter navigation */}
@@ -92,7 +109,7 @@ export const Testimonial = ({ data }: { data: PageBlocksTestimonial }) => {
             <button
               onClick={goPrev}
               aria-label="Previous testimonial"
-              className="flex items-center justify-center size-11 text-primary hover:text-on-surface transition-colors duration-300"
+              className="flex items-center justify-center size-11 text-primary hover:text-on-surface transition-colors duration-300 cursor-pointer"
             >
               <ChevronLeft className="size-5" />
             </button>
@@ -102,7 +119,7 @@ export const Testimonial = ({ data }: { data: PageBlocksTestimonial }) => {
             <button
               onClick={goNext}
               aria-label="Next testimonial"
-              className="flex items-center justify-center size-11 text-primary hover:text-on-surface transition-colors duration-300"
+              className="flex items-center justify-center size-11 text-primary hover:text-on-surface transition-colors duration-300 cursor-pointer"
             >
               <ChevronRight className="size-5" />
             </button>

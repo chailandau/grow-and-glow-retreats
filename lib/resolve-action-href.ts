@@ -1,24 +1,21 @@
 export function resolveActionHref(action: {
-  linkType?: string | null;
-  page?: string | null;
+  _template?: string | null;
+  page?: { _sys?: { breadcrumbs?: string[] } } | null;
   link?: string | null;
 }): string {
-  if (action.linkType === 'external') {
+  if (action._template === 'externalAction') {
     return action.link || '#';
   }
-  // Internal: convert reference path to URL
-  // "content/pages/about.mdx" → "/about"
-  // "content/pages/home.mdx" → "/"
-  if (!action.page) return '#';
-  const slug = action.page
-    .replace('content/pages/', '')
-    .replace('.mdx', '');
+  // Internal: reference field resolves to a Page object with _sys.breadcrumbs
+  const breadcrumbs = action.page?._sys?.breadcrumbs;
+  if (!breadcrumbs) return '#';
+  const slug = breadcrumbs.join('/');
   if (slug === 'home') return '/';
   return `/${slug}`;
 }
 
 export function isExternalAction(action: {
-  linkType?: string | null;
+  _template?: string | null;
 }): boolean {
-  return action.linkType === 'external';
+  return action._template === 'externalAction';
 }

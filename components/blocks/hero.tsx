@@ -47,7 +47,7 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
                 const externalProps = isExternal ? { target: '_blank' as const, rel: 'noopener noreferrer' } : {};
                 return (
                   <div key={action!.label} data-tina-field={tinaField(action)}>
-                    {action!.type === 'link' ? (
+                    {action!.style === 'link' ? (
                       <Link
                         href={href}
                         {...externalProps}
@@ -101,18 +101,16 @@ export const heroBlockSchema: Template = {
       text: 'A curated sanctuary for the modern spirit. Rediscover your internal rhythm through architectural silence and intentional movement.',
       actions: [
         {
+          _template: 'internalAction',
           label: 'Book a Retreat',
-          type: 'button',
-          linkType: 'internal',
+          style: 'button',
           page: 'content/pages/home.mdx',
-          link: '',
         },
         {
+          _template: 'internalAction',
           label: 'Our Story',
-          type: 'link',
-          linkType: 'internal',
+          style: 'link',
           page: 'content/pages/about.mdx',
-          link: '',
         },
       ],
       image: {

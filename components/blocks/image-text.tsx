@@ -93,7 +93,7 @@ const TextColumn = ({ data }: { data: PageBlocksImageText }) => (
           const externalProps = isExternal ? { target: '_blank' as const, rel: 'noopener noreferrer' } : {};
           return (
             <div key={action!.label} data-tina-field={tinaField(action)}>
-              {action!.type === 'link' ? (
+              {action!.style === 'link' ? (
                 <Link
                   href={href}
                   {...externalProps}
@@ -132,11 +132,10 @@ export const imageTextBlockSchema: Template = {
       text: 'Every retreat is designed to help you slow down, reconnect, and rediscover the quiet strength within. Set among rolling hills and ancient woodlands, our spaces invite deep restoration.',
       actions: [
         {
+          _template: 'internalAction',
           label: 'Learn More',
-          type: 'link',
-          linkType: 'internal',
+          style: 'link',
           page: 'content/pages/about.mdx',
-          link: '',
         },
       ],
       image: {

@@ -12,20 +12,20 @@ export const Callout = ({ data }: { data: PageBlocksCallout }) => {
             <Link
                 data-tina-field={tinaField(data, 'url')}
                 href={data.url!}
-                className='hover:bg-background dark:hover:border-t-border bg-muted group mx-auto flex w-fit items-center gap-4 rounded-full border p-1 pl-4 shadow-md shadow-zinc-950/5 transition-colors duration-300 dark:border-t-white/5 dark:shadow-zinc-950'
+                className='group mx-auto flex w-fit items-center gap-4 bg-surface-container-low px-6 py-3 hover:bg-surface-container transition-colors duration-300'
             >
-                <span data-tina-field={tinaField(data, 'text')} className='text-foreground text-sm'>
+                <span data-tina-field={tinaField(data, 'text')} className='font-label text-xs uppercase tracking-widest text-on-surface-variant'>
                     {data.text}
                 </span>
-                <span className='dark:border-background block h-4 w-0.5 border-l bg-white dark:bg-zinc-700'></span>
+                <span className='block h-4 w-px bg-outline-variant'></span>
 
-                <div className='bg-background group-hover:bg-muted size-6 overflow-hidden rounded-full duration-500'>
-                    <div className='flex w-12 -translate-x-1/2 duration-500 ease-in-out group-hover:translate-x-0'>
-                        <span className='flex size-6'>
-                            <ArrowRight className='m-auto size-3' />
+                <div className='overflow-hidden'>
+                    <div className='flex w-8 -translate-x-1/2 duration-500 ease-in-out group-hover:translate-x-0'>
+                        <span className='flex size-4'>
+                            <ArrowRight className='m-auto size-3 text-primary' />
                         </span>
-                        <span className='flex size-6'>
-                            <ArrowRight className='m-auto size-3' />
+                        <span className='flex size-4'>
+                            <ArrowRight className='m-auto size-3 text-primary' />
                         </span>
                     </div>
                 </div>
@@ -40,8 +40,9 @@ export const calloutBlockSchema: Template = {
     ui: {
         previewSrc: '/blocks/callout.png',
         defaultItem: {
-            url: 'https://tina.io/editorial-workflow',
-            text: 'Support for live editing and editorial workflow',
+            background: 'bg-surface-container-low',
+            url: '/retreats',
+            text: 'Now accepting reservations for our Summer 2025 retreat season',
         },
     },
     fields: [

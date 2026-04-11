@@ -14,6 +14,28 @@ const Global: Collection = {
   fields: [
     {
       type: "object",
+      label: "Announcement Banner",
+      name: "announcement",
+      fields: [
+        {
+          type: "boolean",
+          label: "Show Banner",
+          name: "show",
+        },
+        {
+          type: "string",
+          label: "Text",
+          name: "text",
+        },
+        {
+          type: "string",
+          label: "URL",
+          name: "url",
+        },
+      ],
+    },
+    {
+      type: "object",
       label: "Header",
       name: "header",
       fields: [
