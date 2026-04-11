@@ -1,37 +1,49 @@
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link'
 import type { Template } from 'tinacms';
 import { tinaField } from 'tinacms/dist/react';
-import { iconSchema } from '@/tina/fields/icon';
 import { Button } from '@/components/ui/button'
-import { PageBlocksCta } from '@/tina/__generated__/types';
-import { Icon } from '../icon';
-import { Section } from '../layout/section';
+import { PageBlocksText } from '@/tina/__generated__/types';
+import { Section, sectionBlockSchemaField } from '../layout/section';
+import { resolveActionHref, isExternalAction } from '@/lib/resolve-action-href';
+import { actionsFieldSchema } from '@/tina/fields/actions';
 
-export const CallToAction = ({ data }: { data: PageBlocksCta }) => {
+export const Text = ({ data }: { data: PageBlocksText }) => {
     return (
-        <Section>
-            <div className="text-center">
-                <h2 className="text-balance text-4xl font-semibold lg:text-5xl" data-tina-field={tinaField(data, 'title')}>{data.title}</h2>
-                <p className="mt-4" data-tina-field={tinaField(data, 'description')}>{data.description}</p>
+        <Section background={data.background!}>
+            <div className="max-w-xl mx-auto text-center">
+                <h2 className="font-headline text-5xl md:text-6xl text-on-surface mb-8" data-tina-field={tinaField(data, 'title')}>{data.title}</h2>
+                <p className="font-body text-on-surface-variant leading-relaxed italic mb-12" data-tina-field={tinaField(data, 'description')}>{data.description}</p>
 
-                <div className="mt-12 flex flex-wrap justify-center gap-4">
-                    {data.actions && data.actions.map(action => (
-                        <div
-                            key={action!.label}
-                            data-tina-field={tinaField(action)}
-                            className="bg-foreground/10 rounded-[calc(var(--radius-xl)+0.125rem)] border p-0.5">
-                            <Button
-                                asChild
-                                size="lg"
-                                variant={action!.type === 'link' ? 'ghost' : 'default'}
-                                className="rounded-xl px-5 text-base">
-                                <Link href={action!.link!}>
-                                    {action?.icon && (<Icon data={action?.icon} />)}
-                                    <span className="text-nowrap">{action!.label}</span>
-                                </Link>
-                            </Button>
-                        </div>
-                    ))}
+                <div className="flex flex-wrap justify-center gap-6">
+                    {data.actions && data.actions.map((action) => {
+                        const href = resolveActionHref(action!);
+                        const isExternal = isExternalAction(action!);
+                        const externalProps = isExternal ? { target: '_blank' as const, rel: 'noopener noreferrer' } : {};
+                        return (
+                            <div
+                                key={action!.label}
+                                data-tina-field={tinaField(action)}>
+                                {action!.type === 'link' ? (
+                                    <Link
+                                        href={href}
+                                        {...externalProps}
+                                        className="inline-flex items-center gap-2 font-label text-xs uppercase tracking-widest text-primary border-b border-primary/20 hover:border-primary pb-1 transition-colors duration-300"
+                                    >
+                                        <span>{action!.label}</span>
+                                        <ArrowRight className="size-4" />
+                                    </Link>
+                                ) : (
+                                    <Button asChild>
+                                        <Link href={href} {...externalProps}>
+                                            <span>{action!.label}</span>
+                                            <ArrowRight className="size-4" />
+                                        </Link>
+                                    </Button>
+                                )}
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         </Section>
@@ -39,29 +51,35 @@ export const CallToAction = ({ data }: { data: PageBlocksCta }) => {
 }
 
 
-export const ctaBlockSchema: Template = {
-    name: "cta",
-    label: "CTA",
+export const textBlockSchema: Template = {
+    name: "text",
+    label: "Text Content",
     ui: {
         previewSrc: "/blocks/cta.png",
         defaultItem: {
-            title: "Start Building",
-            description: "Get started with TinaCMS today and take your content management to the next level.",
+            background: "bg-surface-container",
+            title: "Join the Inner Circle",
+            description: "Receive private invitations to our upcoming retreats and seasonal reflections on growth and glowing from within.",
             actions: [
                 {
-                    label: 'Get Started',
+                    label: 'Reserve Your Spot',
                     type: 'button',
-                    link: '/',
+                    linkType: 'internal',
+                    page: 'content/pages/home.mdx',
+                    link: '',
                 },
                 {
-                    label: 'Book Demo',
+                    label: 'Learn More',
                     type: 'link',
-                    link: '/',
+                    linkType: 'internal',
+                    page: 'content/pages/about.mdx',
+                    link: '',
                 },
             ],
         },
     },
     fields: [
+        sectionBlockSchemaField as any,
         {
             type: "string",
             label: "Title",
@@ -75,46 +93,6 @@ export const ctaBlockSchema: Template = {
                 component: "textarea",
             },
         },
-        {
-            label: 'Actions',
-            name: 'actions',
-            type: 'object',
-            list: true,
-            ui: {
-                defaultItem: {
-                    label: 'Action Label',
-                    type: 'button',
-                    icon: {
-                        name: "Tina",
-                        color: "white",
-                        style: "float",
-                    },
-                    link: '/',
-                },
-                itemProps: (item) => ({ label: item.label }),
-            },
-            fields: [
-                {
-                    label: 'Label',
-                    name: 'label',
-                    type: 'string',
-                },
-                {
-                    label: 'Type',
-                    name: 'type',
-                    type: 'string',
-                    options: [
-                        { label: 'Button', value: 'button' },
-                        { label: 'Link', value: 'link' },
-                    ],
-                },
-                iconSchema as any,
-                {
-                    label: 'Link',
-                    name: 'link',
-                    type: 'string',
-                },
-            ],
-        },
+        actionsFieldSchema as any,
     ],
 };
