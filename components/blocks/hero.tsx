@@ -26,7 +26,7 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
           )}
           {data.title && (
             <div data-tina-field={tinaField(data, 'title')}>
-              <h1 className="font-title text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-on-surface mb-8">
+              <h1 className="font-headline text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-on-surface mb-8">
                 {data.title!}
               </h1>
             </div>
@@ -72,7 +72,7 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
           </div>
         </div>
 
-        {/* Image Column */}
+        {/* Image Column — desktop: in grid; mobile: below text */}
         {data.image?.src && (
           <div className="lg:col-span-7 relative" data-tina-field={tinaField(data, 'image')}>
             <div className="aspect-[7/5] overflow-hidden editorial-shadow">

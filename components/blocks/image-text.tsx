@@ -18,8 +18,15 @@ export const ImageText = ({ data }: { data: PageBlocksImageText }) => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
         {imageFirst ? (
           <>
-            <ImageColumn data={data} />
+            {/* Desktop: image first; mobile: hidden */}
+            <div className="hidden lg:block">
+              <ImageColumn data={data} />
+            </div>
             <TextColumn data={data} />
+            {/* Mobile: image below text */}
+            <div className="lg:hidden">
+              <ImageColumn data={data} />
+            </div>
           </>
         ) : (
           <>
