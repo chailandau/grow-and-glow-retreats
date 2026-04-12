@@ -8,27 +8,16 @@ import { Section, sectionBlockSchemaField } from '../layout/section';
 
 export const Callout = ({ data }: { data: PageBlocksCallout }) => {
     return (
-        <Section background={data.background!} className='py-6'>
+        <Section background={data.background!} className='flex justify-center py-6'>
             <Link
                 data-tina-field={tinaField(data, 'url')}
                 href={data.url!}
-                className='group mx-auto flex w-fit items-center gap-4 bg-surface-container-low px-6 py-3 interact:bg-surface-container transition-colors duration-300'
+                className='group mx-auto inline-flex target-area-7 items-center gap-4 font-label text-xs uppercase tracking-widest text-on-surface-variant transition-colors duration-300 interact:text-primary interact:underline underline-offset-4'
             >
-                <span data-tina-field={tinaField(data, 'text')} className='font-label text-xs uppercase tracking-widest text-on-surface-variant'>
+                <span data-tina-field={tinaField(data, 'text')}>
                     {data.text}
                 </span>
-                <span className='block h-4 w-px bg-outline-variant'></span>
-
-                <div className='overflow-hidden'>
-                    <div className='flex w-8 -translate-x-1/2 duration-500 ease-in-out group-interact:translate-x-0'>
-                        <span className='flex size-4'>
-                            <ArrowRight className='m-auto size-3 text-primary' />
-                        </span>
-                        <span className='flex size-4'>
-                            <ArrowRight className='m-auto size-3 text-primary' />
-                        </span>
-                    </div>
-                </div>
+                <ArrowRight className='size-3 text-primary transition-transform duration-300 group-interact:translate-x-1' />
             </Link>
         </Section>
     );

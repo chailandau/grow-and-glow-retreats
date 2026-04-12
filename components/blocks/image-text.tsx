@@ -52,12 +52,12 @@ const ImageColumn = ({ data }: { data: PageBlocksImageText }) => {
 
 const TextColumn = ({ data }: { data: PageBlocksImageText }) => (
   <div>
-    {data.tagline && (
+    {data.eyebrow && (
       <span
         className="font-label text-xs uppercase tracking-[0.3em] text-primary mb-6 block"
-        data-tina-field={tinaField(data, 'tagline')}
+        data-tina-field={tinaField(data, 'eyebrow')}
       >
-        {data.tagline}
+        {data.eyebrow}
       </span>
     )}
     {data.title && (
@@ -124,11 +124,12 @@ export const imageTextBlockSchema: Template = {
   name: 'imageText',
   label: 'Image + Text Content',
   ui: {
+    previewSrc: '/blocks/text-image-content.png',
     defaultItem: {
       background: 'bg-surface',
       layout: 'imageLeft',
       imageRatio: 'default',
-      tagline: 'Our Story',
+      eyebrow: 'Our Story',
       title: 'Rooted in Nature, Guided by Light',
       subtitle: '',
       text: 'Every retreat is designed to help you slow down, reconnect, and rediscover the quiet strength within. Set among rolling hills and ancient woodlands, our spaces invite deep restoration.',
@@ -141,7 +142,7 @@ export const imageTextBlockSchema: Template = {
         },
       ],
       image: {
-        src: '/uploads/hero/retreat.jpg',
+        src: '/uploads/retreat.jpg',
         alt: 'Peaceful retreat setting surrounded by nature',
       },
     },
@@ -186,8 +187,8 @@ export const imageTextBlockSchema: Template = {
     },
     {
       type: 'string',
-      label: 'Tagline',
-      name: 'tagline',
+      label: 'Eyebrow',
+      name: 'eyebrow',
     },
     {
       type: 'string',

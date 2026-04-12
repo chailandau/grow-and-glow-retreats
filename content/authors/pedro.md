@@ -1,4 +1,4 @@
 ---
 name: Pedro
-avatar: /uploads/authors/pedro.webp
+avatar: /uploads/pedro.webp
 ---

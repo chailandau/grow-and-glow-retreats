@@ -1,13 +1,11 @@
 import type { Collection } from 'tinacms';
-import { heroBlockSchema } from '@/components/blocks/hero';
-import { contentBlockSchema } from '@/components/blocks/content';
-import { testimonialBlockSchema } from '@/components/blocks/testimonial';
-import { featureBlockSchema } from '@/components/blocks/features';
-import { videoBlockSchema } from '@/components/blocks/video';
 import { calloutBlockSchema } from '@/components/blocks/callout';
-import { statsBlockSchema } from '@/components/blocks/stats';
-import { textBlockSchema } from '@/components/blocks/call-to-action';
+import { featureBlockSchema } from '@/components/blocks/features';
+import { heroBlockSchema } from '@/components/blocks/hero';
 import { imageTextBlockSchema } from '@/components/blocks/image-text';
+import { statsBlockSchema } from '@/components/blocks/stats';
+import { testimonialBlockSchema } from '@/components/blocks/testimonial';
+import { textBlockSchema } from '@/components/blocks/call-to-action';
 
 const Page: Collection = {
   label: 'Pages',
@@ -36,15 +34,13 @@ const Page: Collection = {
         }),
       },
       templates: [
-        heroBlockSchema,
+        imageTextBlockSchema,
+        textBlockSchema,
+        testimonialBlockSchema,
         calloutBlockSchema,
+        heroBlockSchema,
         featureBlockSchema,
         statsBlockSchema,
-        textBlockSchema,
-        imageTextBlockSchema,
-        contentBlockSchema,
-        testimonialBlockSchema,
-        videoBlockSchema,
       ],
     },
   ],

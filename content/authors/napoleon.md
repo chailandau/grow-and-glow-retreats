@@ -1,4 +1,4 @@
 ---
 name: Napoleon
-avatar: /uploads/authors/napoleon.webp
+avatar: /uploads/napoleon.webp
 ---

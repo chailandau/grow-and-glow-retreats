@@ -17,17 +17,17 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 w-full items-center">
         {/* Text Column */}
         <div className="lg:col-span-5 z-10">
-          {data.tagline && (
-            <div data-tina-field={tinaField(data, 'tagline')}>
+          {data.eyebrow && (
+            <div data-tina-field={tinaField(data, 'eyebrow')}>
               <span className="font-label text-xs uppercase tracking-[0.3em] text-primary mb-6 block">
-                {data.tagline!}
+                {data.eyebrow!}
               </span>
             </div>
           )}
-          {data.headline && (
-            <div data-tina-field={tinaField(data, 'headline')}>
-              <h1 className="font-headline text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-on-surface mb-8">
-                {data.headline!}
+          {data.title && (
+            <div data-tina-field={tinaField(data, 'title')}>
+              <h1 className="font-title text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-on-surface mb-8">
+                {data.title!}
               </h1>
             </div>
           )}
@@ -98,8 +98,8 @@ export const heroBlockSchema: Template = {
     previewSrc: '/blocks/hero.png',
     defaultItem: {
       background: 'bg-orange-50/80',
-      tagline: "Est. 2024",
-      headline: 'Grow and Glow Retreats',
+      eyebrow: "Est. 2024",
+      title: 'Grow and Glow Retreats',
       text: 'A curated sanctuary for the modern spirit. Rediscover your internal rhythm through architectural silence and intentional movement.',
       actions: [
         {
@@ -116,7 +116,7 @@ export const heroBlockSchema: Template = {
         },
       ],
       image: {
-        src: '/uploads/hero/retreat.jpg',
+        src: '/uploads/retreat.jpg',
         alt: 'Peaceful wellness retreat surrounded by nature',
       },
     },
@@ -125,13 +125,13 @@ export const heroBlockSchema: Template = {
     sectionBlockSchemaField as any,
     {
       type: 'string',
-      label: 'Headline',
-      name: 'headline',
+      label: 'Eyebrow',
+      name: 'eyebrow',
     },
     {
       type: 'string',
-      label: 'Tagline',
-      name: 'tagline',
+      label: 'Title',
+      name: 'title',
     },
     {
       type: 'string',
