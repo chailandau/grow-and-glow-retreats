@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useLayout } from "../layout-context";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronRight } from "lucide-react";
 import { AnnouncementBanner } from "./announcement-banner";
 
 export const Header = () => {
@@ -16,6 +16,14 @@ export const Header = () => {
   const [menuState, setMenuState] = React.useState(false)
   const [stuck, setStuck] = React.useState(false)
   const sentinelRef = React.useRef<HTMLDivElement>(null)
+
+  React.useEffect(() => {
+    document.body.style.overflow = menuState ? 'hidden' : ''
+    if (!menuState) return
+    const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setMenuState(false) }
+    document.addEventListener('keydown', handleKey)
+    return () => { document.body.style.overflow = ''; document.removeEventListener('keydown', handleKey) }
+  }, [menuState])
 
   React.useEffect(() => {
     const el = sentinelRef.current
@@ -37,7 +45,7 @@ export const Header = () => {
       <div ref={sentinelRef} className="h-0 w-0" aria-hidden />
       <nav
         data-state={menuState && 'active'}
-        className="bg-white/80 sticky top-0 z-20 w-full backdrop-blur-md">
+        className={`sticky top-0 z-20 w-full backdrop-blur-md border-b border-b-outline-variant/30 ${menuState ? 'bg-white' : 'bg-white/80'}`}>
         <div className="mx-auto max-w-screen-2xl px-6 md:px-12">
           <div className={`relative flex flex-wrap items-center justify-between gap-6 lg:gap-0 transition-[padding] duration-300 ${stuck ? 'py-5' : 'py-10'}`}>
             <div className="flex w-full items-center justify-between gap-12">
@@ -80,28 +88,38 @@ export const Header = () => {
                 </ul>
               </div>
             </div>
+          </div>
+        </div>
 
-            <div className="bg-surface in-data-[state=active]:block lg:in-data-[state=active]:flex mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 border-t border-outline-variant p-6 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0">
-              <div className="lg:hidden">
-                <ul className="space-y-6 font-headline italic text-base tracking-wide text-on-surface-variant">
-                  {header.nav!.map((item, index) => {
-                    const isActive = pathname === item!.href || (item!.href !== '/' && pathname.startsWith(item!.href!))
-                    return (
-                      <li key={index}>
-                        <Link
-                          href={item!.href!}
-                          className={`target-area transition-colors duration-300 ${isActive ? 'text-primary' : 'interact:text-primary'}`}>
-                          <span>{item!.label}</span>
-                        </Link>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </div>
-            </div>
+        <div className="bg-surface in-data-[state=active]:block lg:in-data-[state=active]:flex hidden absolute left-0 right-0 top-full w-full border-t border-t-outline-variant/30 border-b border-b-outline-variant/30 md:flex-nowrap lg:relative lg:top-auto lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:border-transparent lg:bg-transparent lg:p-0">
+          <div className="lg:hidden w-full">
+            <ul className="font-headline italic text-base tracking-wide text-on-surface-variant">
+              {header.nav!.map((item, index) => {
+                const isActive = pathname === item!.href || (item!.href !== '/' && pathname.startsWith(item!.href!))
+                return (
+                  <li key={index} className="mx-10 md:mx-16 border-b border-outline-variant/30 last:border-b-0">
+                    <Link
+                      href={item!.href!}
+                      className={`group flex items-center gap-3 py-8 target-area transition-colors duration-300 ${isActive ? 'text-primary underline underline-offset-4 decoration-1 decoration-primary/50' : 'interact:text-primary interact:underline interact:underline-offset-4 interact:decoration-1 interact:decoration-primary/50'}`}>
+                      <ChevronRight className="size-4 opacity-50 transition-transform duration-300 group-hover:translate-x-1" />
+                      <span>{item!.label}</span>
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
           </div>
         </div>
       </nav>
+
+      {menuState && (
+        <div
+          className="fixed inset-0 z-[19] bg-black/40 lg:hidden"
+          onClick={() => setMenuState(false)}
+          onPointerDown={() => setMenuState(false)}
+          aria-hidden
+        />
+      )}
     </>
   )
 }

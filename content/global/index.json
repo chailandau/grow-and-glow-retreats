@@ -20,10 +20,6 @@
       {
         "href": "/about",
         "label": "About"
-      },
-      {
-        "href": "/posts",
-        "label": "Blog"
       }
     ]
   },

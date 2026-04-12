@@ -12,7 +12,7 @@ export const AnnouncementBanner = () => {
   if (!announcement?.show || !announcement?.text) return null;
 
   return (
-    <div className="flex items-center justify-center bg-surface-container-low px-6 py-3">
+    <div className="relative z-20 flex items-center justify-center bg-surface-container-low px-6 py-3">
       {announcement.url ? (
         <Link
           href={announcement.url}
