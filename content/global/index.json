@@ -20,6 +20,14 @@
       {
         "href": "/about",
         "label": "About"
+      },
+      {
+        "href": "/retreats",
+        "label": "Retreats"
+      },
+      {
+        "href": "/contact",
+        "label": "Contact"
       }
     ]
   },

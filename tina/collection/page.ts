@@ -6,6 +6,8 @@ import { imageTextBlockSchema } from '@/components/blocks/image-text';
 import { statsBlockSchema } from '@/components/blocks/stats';
 import { testimonialBlockSchema } from '@/components/blocks/testimonial';
 import { textBlockSchema } from '@/components/blocks/call-to-action';
+import { longTextBlockSchema } from '@/components/blocks/long-text';
+import { embedBlockSchema } from '@/components/blocks/embed';
 
 const Page: Collection = {
   label: 'Pages',
@@ -41,6 +43,8 @@ const Page: Collection = {
         heroBlockSchema,
         featureBlockSchema,
         statsBlockSchema,
+        longTextBlockSchema,
+        embedBlockSchema,
       ],
     },
   ],

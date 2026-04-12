@@ -7,6 +7,8 @@ import { Callout } from "./callout";
 import { Stats } from "./stats";
 import { Text } from "./call-to-action";
 import { ImageText } from "./image-text";
+import { LongText } from "./long-text";
+import { Embed } from "./embed";
 
 export const Blocks = (props: Omit<Page, "id" | "_sys" | "_values">) => {
   if (!props.blocks) return null;
@@ -39,6 +41,10 @@ case "PageBlocksFeatures":
       return <Text data={block} />;
     case "PageBlocksImageText":
       return <ImageText data={block} />;
+    case "PageBlocksLongText":
+      return <LongText data={block} />;
+    case "PageBlocksEmbed":
+      return <Embed data={block} />;
     default:
       return null;
   }
