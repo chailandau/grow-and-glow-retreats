@@ -16,22 +16,24 @@ export const Text = ({ data }: { data: PageBlocksText }) => {
                 <p className="font-body text-on-surface-variant leading-relaxed italic mb-12" data-tina-field={tinaField(data, 'description')}>{data.description}</p>
 
                 <div className="flex flex-wrap justify-center gap-6">
-                    {data.actions && data.actions.map((action) => {
+                    {data.actions && data.actions.map((action, i) => {
                         const href = resolveActionHref(action!);
                         const isExternal = isExternalAction(action!);
                         const externalProps = isExternal ? { target: '_blank' as const, rel: 'noopener noreferrer' } : {};
                         return (
                             <div
-                                key={action!.label}
+                                key={`${action!.label}-${i}`}
                                 data-tina-field={tinaField(action)}>
                                 {action!.style === 'link' ? (
                                     <Link
                                         href={href}
                                         {...externalProps}
-                                        className="inline-flex items-center gap-2 font-label text-xs uppercase tracking-widest text-primary border-b border-primary/20 hover:border-primary pb-1 transition-colors duration-300"
+                                        className="font-label text-xs uppercase tracking-widest text-primary border-b border-primary/20 interact:border-primary pb-1 transition-colors duration-300"
                                     >
-                                        <span>{action!.label}</span>
-                                        <ArrowRight className="size-4" />
+                                        <div className="target-area-7 inline-flex items-center gap-2">
+                                            <span>{action!.label}</span>
+                                            <ArrowRight className="size-4" />
+                                        </div>
                                     </Link>
                                 ) : (
                                     <Button asChild>
@@ -62,13 +64,13 @@ export const textBlockSchema: Template = {
             description: "Receive private invitations to our upcoming retreats and seasonal reflections on growth and glowing from within.",
             actions: [
                 {
-                    _template: 'internalAction',
+                    type: 'internal',
                     label: 'Reserve Your Spot',
                     style: 'button',
                     page: 'content/pages/home.mdx',
                 },
                 {
-                    _template: 'internalAction',
+                    type: 'internal',
                     label: 'Learn More',
                     style: 'link',
                     page: 'content/pages/about.mdx',

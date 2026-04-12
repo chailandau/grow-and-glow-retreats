@@ -87,20 +87,22 @@ const TextColumn = ({ data }: { data: PageBlocksImageText }) => (
 
     {data.actions && data.actions.length > 0 && (
       <div className="flex items-center gap-8 mt-10">
-        {data.actions.map((action) => {
+        {data.actions.map((action, i) => {
           const href = resolveActionHref(action!);
           const isExternal = isExternalAction(action!);
           const externalProps = isExternal ? { target: '_blank' as const, rel: 'noopener noreferrer' } : {};
           return (
-            <div key={action!.label} data-tina-field={tinaField(action)}>
+            <div key={`${action!.label}-${i}`} data-tina-field={tinaField(action)}>
               {action!.style === 'link' ? (
                 <Link
                   href={href}
                   {...externalProps}
-                  className="inline-flex items-center gap-2 font-label text-xs uppercase tracking-widest border-b border-primary pb-1 text-primary hover:text-on-surface transition-colors duration-300"
+                  className="font-label text-xs uppercase tracking-widest border-b border-primary pb-1 text-primary interact:text-on-surface transition-colors duration-300"
                 >
-                  <span>{action!.label}</span>
-                  <ArrowRight className="size-4" />
+                  <div className="target-area-7 inline-flex items-center gap-2">
+                    <span>{action!.label}</span>
+                    <ArrowRight className="size-4" />
+                  </div>
                 </Link>
               ) : (
                 <Button asChild>
@@ -132,7 +134,7 @@ export const imageTextBlockSchema: Template = {
       text: 'Every retreat is designed to help you slow down, reconnect, and rediscover the quiet strength within. Set among rolling hills and ancient woodlands, our spaces invite deep restoration.',
       actions: [
         {
-          _template: 'internalAction',
+          type: 'internal',
           label: 'Learn More',
           style: 'link',
           page: 'content/pages/about.mdx',

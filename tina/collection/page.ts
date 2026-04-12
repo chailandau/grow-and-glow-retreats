@@ -31,6 +31,9 @@ const Page: Collection = {
       label: 'Sections',
       ui: {
         visualSelector: true,
+        itemProps: (item: any) => ({
+          label: item?.title || item?.label || item?._template,
+        }),
       },
       templates: [
         heroBlockSchema,

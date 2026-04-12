@@ -110,7 +110,7 @@ export const Testimonial = ({ data }: { data: PageBlocksTestimonial }) => {
             <button
               onClick={goPrev}
               aria-label="Previous testimonial"
-              className="flex items-center justify-center size-11 text-primary hover:text-on-surface transition-colors duration-300 cursor-pointer"
+              className="flex items-center justify-center size-11 text-primary interact:text-on-surface transition-colors duration-300 cursor-pointer"
             >
               <ChevronLeft className="size-5" />
             </button>
@@ -120,7 +120,7 @@ export const Testimonial = ({ data }: { data: PageBlocksTestimonial }) => {
             <button
               onClick={goNext}
               aria-label="Next testimonial"
-              className="flex items-center justify-center size-11 text-primary hover:text-on-surface transition-colors duration-300 cursor-pointer"
+              className="flex items-center justify-center size-11 text-primary interact:text-on-surface transition-colors duration-300 cursor-pointer"
             >
               <ChevronRight className="size-5" />
             </button>

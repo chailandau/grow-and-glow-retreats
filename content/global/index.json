@@ -31,27 +31,15 @@
     "social": [
       {
         "icon": {
-          "name": "FaLinkedin"
+          "name": "FaFacebook"
         },
-        "url": "https://www.linkedin.com/company/tinacms"
+        "url": "https://facebook.com"
       },
       {
         "icon": {
-          "name": "FaGithub"
+          "name": "FaInstagram"
         },
-        "url": "https://github.com/tinacms/tinacms"
-      },
-      {
-        "icon": {
-          "name": "FaYoutube"
-        },
-        "url": "https://www.youtube.com/@TinaCMS"
-      },
-      {
-        "icon": {
-          "name": "FaXTwitter"
-        },
-        "url": "https://x.com/TinaCMS"
+        "url": "https://instagram.com"
       }
     ]
   },

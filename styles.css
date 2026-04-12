@@ -2,6 +2,7 @@
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+@custom-variant interact (&:hover, &:focus-visible);
 @plugin "@tailwindcss/typography";
 
 @theme inline {
@@ -134,12 +135,33 @@
   * {
     @apply border-border outline-ring/50;
   }
+  a:focus-visible,
+  button:focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary rounded-sm;
+  }
   body {
     @apply bg-background text-foreground;
   }
   .font-headline {
     font-weight: 375;
   }
+}
+
+/* Target area utilities */
+@utility target-area {
+  display: block;
+  padding: 0.875rem;
+  margin: -0.875rem;
+}
+@utility target-area-flex {
+  display: flex;
+  padding: 0.875rem;
+  margin: -0.875rem;
+}
+@utility target-area-7 {
+  display: block;
+  padding: 0.4375rem;
+  margin: -0.4375rem;
 }
 
 /* Editorial shadow utility */

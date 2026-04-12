@@ -6,21 +6,21 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-xs uppercase tracking-widest font-label transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-xs uppercase tracking-widest font-label transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 [&_svg]:transition-transform [&_svg]:duration-300 interact:[&_svg]:translate-x-1 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground hover:bg-primary-container hover:text-on-surface",
+          "bg-primary text-primary-foreground interact:bg-primary-container interact:text-on-surface",
         destructive:
-          "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40",
+          "bg-destructive text-white interact:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40",
         outline:
-          "border border-outline/30 bg-transparent hover:bg-surface-container-low hover:text-on-surface",
+          "border border-outline/30 bg-transparent interact:bg-surface-container-low interact:text-on-surface",
         secondary:
-          "bg-surface-container text-on-surface hover:bg-surface-container-high",
+          "bg-surface-container text-on-surface interact:bg-surface-container-high",
         ghost:
-          "hover:bg-surface-container hover:text-on-surface",
-        link: "text-primary border-b border-primary/20 hover:border-primary pb-1",
+          "interact:bg-surface-container interact:text-on-surface",
+        link: "text-primary border-b border-primary/20 interact:border-primary pb-1",
       },
       size: {
         default: "px-8 py-3",

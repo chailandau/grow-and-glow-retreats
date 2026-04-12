@@ -43,7 +43,8 @@ export const Header = () => {
             <div className="flex w-full items-center justify-between gap-12">
               <Link
                 href="/"
-                aria-label="home">
+                aria-label="home"
+                className="target-area-7">
                 <Image
                   src="/uploads/logo.svg"
                   alt="Grow and Glow Retreats"
@@ -70,7 +71,7 @@ export const Header = () => {
                       <li key={index}>
                         <Link
                           href={item!.href!}
-                          className={`underline underline-offset-4 decoration-1 transition-all duration-300 ${isActive ? 'text-primary decoration-primary/50' : 'decoration-transparent hover:text-primary hover:decoration-primary/50'}`}>
+                          className={`target-area-7 underline underline-offset-4 decoration-1 transition-all duration-300 ${isActive ? 'text-primary decoration-primary/50' : 'decoration-transparent interact:text-primary interact:decoration-primary/50'}`}>
                           <span>{item!.label}</span>
                         </Link>
                       </li>
@@ -89,7 +90,7 @@ export const Header = () => {
                       <li key={index}>
                         <Link
                           href={item!.href!}
-                          className={`block transition-colors duration-300 ${isActive ? 'text-primary' : 'hover:text-primary'}`}>
+                          className={`target-area transition-colors duration-300 ${isActive ? 'text-primary' : 'interact:text-primary'}`}>
                           <span>{item!.label}</span>
                         </Link>
                       </li>

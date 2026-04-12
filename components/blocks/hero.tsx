@@ -41,20 +41,22 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
 
           <div className="flex items-center gap-8 mt-10">
             {data.actions &&
-              data.actions.map((action) => {
+              data.actions.map((action, i) => {
                 const href = resolveActionHref(action!);
                 const isExternal = isExternalAction(action!);
                 const externalProps = isExternal ? { target: '_blank' as const, rel: 'noopener noreferrer' } : {};
                 return (
-                  <div key={action!.label} data-tina-field={tinaField(action)}>
+                  <div key={`${action!.label}-${i}`} data-tina-field={tinaField(action)}>
                     {action!.style === 'link' ? (
                       <Link
                         href={href}
                         {...externalProps}
-                        className="inline-flex items-center gap-2 font-label text-xs uppercase tracking-widest border-b border-primary pb-1 text-primary hover:text-on-surface transition-colors duration-300"
+                        className="font-label text-xs uppercase tracking-widest border-b border-primary pb-1 text-primary interact:text-on-surface transition-colors duration-300"
                       >
-                        <span>{action!.label}</span>
-                        <ArrowRight className="size-4" />
+                        <div className="target-area-7 inline-flex items-center gap-2">
+                          <span>{action!.label}</span>
+                          <ArrowRight className="size-4" />
+                        </div>
                       </Link>
                     ) : (
                       <Button asChild>
@@ -101,13 +103,13 @@ export const heroBlockSchema: Template = {
       text: 'A curated sanctuary for the modern spirit. Rediscover your internal rhythm through architectural silence and intentional movement.',
       actions: [
         {
-          _template: 'internalAction',
+          type: 'internal',
           label: 'Book a Retreat',
           style: 'button',
           page: 'content/pages/home.mdx',
         },
         {
-          _template: 'internalAction',
+          type: 'internal',
           label: 'Our Story',
           style: 'link',
           page: 'content/pages/about.mdx',

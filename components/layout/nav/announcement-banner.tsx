@@ -11,32 +11,21 @@ export const AnnouncementBanner = () => {
 
   if (!announcement?.show || !announcement?.text) return null;
 
-  const content = (
-    <div className="group flex items-center justify-center gap-4 bg-surface-container-low px-6 py-3">
-      <span className="font-label text-xs uppercase tracking-widest text-on-surface-variant">
-        {announcement.text}
-      </span>
-      {announcement.url && (
-        <>
-          <span className="block h-4 w-px bg-outline-variant" />
-          <div className="overflow-hidden">
-            <div className="flex w-8 -translate-x-1/2 duration-500 ease-in-out group-hover:translate-x-0">
-              <span className="flex size-4">
-                <ArrowRight className="m-auto size-3 text-primary" />
-              </span>
-              <span className="flex size-4">
-                <ArrowRight className="m-auto size-3 text-primary" />
-              </span>
-            </div>
-          </div>
-        </>
+  return (
+    <div className="flex items-center justify-center bg-surface-container-low px-6 py-3">
+      {announcement.url ? (
+        <Link
+          href={announcement.url}
+          className="inline-flex target-area-7 group items-center gap-4 font-label text-xs uppercase tracking-widest text-on-surface-variant transition-colors duration-300 interact:text-primary interact:underline underline-offset-4"
+        >
+          <span>{announcement.text}</span>
+          <ArrowRight className="size-3 text-primary transition-transform duration-300 group-interact:translate-x-1" />
+        </Link>
+      ) : (
+        <span className="font-label text-xs uppercase tracking-widest text-on-surface-variant">
+          {announcement.text}
+        </span>
       )}
     </div>
   );
-
-  if (announcement.url) {
-    return <Link href={announcement.url}>{content}</Link>;
-  }
-
-  return content;
 };

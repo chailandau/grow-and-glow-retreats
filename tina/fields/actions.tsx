@@ -1,3 +1,6 @@
+import React from 'react';
+import { TextField, ReferenceField } from 'tinacms';
+
 export const actionsFieldSchema = {
   label: 'Actions',
   name: 'actions',
@@ -5,78 +8,65 @@ export const actionsFieldSchema = {
   list: true,
   ui: {
     defaultItem: {
-      _template: 'internalAction',
+      type: 'internal',
       label: 'Learn More',
       style: 'button',
       page: 'content/pages/home.mdx',
     },
-    itemProps: (item: any) => ({ label: item.label }),
+    itemProps: (item: any) => ({ label: item?.label }),
   },
-  templates: [
+  fields: [
     {
-      name: 'internalAction',
-      label: 'Internal Page Link',
-      ui: {
-        defaultItem: {
-          label: 'Learn More',
-          style: 'button',
-          page: 'content/pages/home.mdx',
-        },
-      },
-      fields: [
-        {
-          label: 'Label',
-          name: 'label',
-          type: 'string' as const,
-        },
-        {
-          label: 'Style',
-          name: 'style',
-          type: 'string' as const,
-          options: [
-            { label: 'Button', value: 'button' },
-            { label: 'Link', value: 'link' },
-          ],
-        },
-        {
-          label: 'Page',
-          name: 'page',
-          type: 'reference' as const,
-          collections: ['page'],
-        },
+      label: 'Type',
+      name: 'type',
+      type: 'string' as const,
+      options: [
+        { label: 'Internal Page Link', value: 'internal' },
+        { label: 'External URL Link', value: 'external' },
       ],
     },
     {
-      name: 'externalAction',
-      label: 'External URL Link',
+      label: 'Label',
+      name: 'label',
+      type: 'string' as const,
+    },
+    {
+      label: 'Style',
+      name: 'style',
+      type: 'string' as const,
+      options: [
+        { label: 'Button', value: 'button' },
+        { label: 'Link', value: 'link' },
+      ],
+    },
+    {
+      label: 'Page',
+      name: 'page',
+      type: 'reference' as const,
+      collections: ['page'],
       ui: {
-        defaultItem: {
-          label: 'Learn More',
-          style: 'button',
-          link: 'https://example.com',
+        component: (props: any) => {
+          const type = props.form.getFieldState(
+            props.field.name.replace('.page', '.type')
+          )?.value;
+          if (type !== 'internal') return null;
+          return React.createElement(ReferenceField, props);
         },
       },
-      fields: [
-        {
-          label: 'Label',
-          name: 'label',
-          type: 'string' as const,
+    },
+    {
+      label: 'URL',
+      name: 'link',
+      type: 'string' as const,
+      ui: {
+        component: (props: any) => {
+          const type = props.form.getFieldState(
+            props.field.name.replace('.link', '.type')
+          )?.value;
+          if (type !== 'external') return null;
+          return React.createElement(TextField, props);
         },
-        {
-          label: 'Style',
-          name: 'style',
-          type: 'string' as const,
-          options: [
-            { label: 'Button', value: 'button' },
-            { label: 'Link', value: 'link' },
-          ],
-        },
-        {
-          label: 'URL',
-          name: 'link',
-          type: 'string' as const,
-        },
-      ],
+      },
     },
   ],
 };

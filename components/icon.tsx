@@ -2,7 +2,7 @@
 //TODO: Fix Types in this file
 //
 import * as BoxIcons from 'react-icons/bi';
-import { FaFacebookF, FaGithub, FaLinkedin, FaXTwitter, FaYoutube } from 'react-icons/fa6';
+import { FaFacebook, FaFacebookF, FaGithub, FaInstagram, FaLinkedin, FaXTwitter, FaYoutube } from 'react-icons/fa6';
 import { AiFillInstagram } from 'react-icons/ai';
 import React from 'react';
 import { useLayout } from './layout/layout-context';
@@ -22,8 +22,10 @@ export const IconOptions = {
     </svg>
   ),
   ...BoxIcons,
+  FaFacebook,
   FaFacebookF,
   FaGithub,
+  FaInstagram,
   FaLinkedin,
   FaXTwitter,
   FaYoutube,
