@@ -32,7 +32,7 @@ const Page: Collection = {
         itemProps: (item: any) => ({
           label: item?.title || item?.label || item?._template,
         }),
-      },
+      } as any,
       templates: [
         imageTextBlockSchema,
         textBlockSchema,
