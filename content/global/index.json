@@ -1,6 +1,6 @@
 {
   "announcement": {
-    "show": true,
+    "show": false,
     "text": "Support for live editing and editorial workflow test",
     "url": "https://tina.io/editorial-workflow"
   },
