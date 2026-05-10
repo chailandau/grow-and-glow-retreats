@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useId } from "react";
 import type { Template } from "tinacms";
 import { tinaField } from "tinacms/dist/react";
 import { Section, sectionBlockSchemaField } from "../layout/section";
@@ -20,7 +20,8 @@ export const CalBooking = ({ data }: { data: PageBlocksCalBooking }) => {
       return data.url.replace(/^\//, "");
     }
   })();
-  const elementId = `cal-inline-${calLink.replace(/\//g, "-")}`;
+  const instanceId = useId().replace(/:/g, "");
+  const elementId = `cal-inline-${calLink.replace(/\//g, "-")}-${instanceId}`;
 
   useEffect(() => {
     if (!calLink) return;
@@ -86,7 +87,7 @@ export const CalBooking = ({ data }: { data: PageBlocksCalBooking }) => {
         )}
         <div
           id={elementId}
-          className="w-full min-h-[700px] overflow-auto"
+          className="w-full min-h-[500px] md:min-h-[700px] overflow-auto"
         />
       </div>
     </Section>
@@ -115,6 +116,9 @@ export const calBookingBlockSchema: Template = {
       type: "string",
       label: "Cal.com URL",
       name: "url",
+      ui: {
+        description: "Enter the full URL, e.g. https://cal.com/growandglow/workshop",
+      },
     },
   ],
 };
