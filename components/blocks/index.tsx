@@ -9,6 +9,7 @@ import { Text } from "./call-to-action";
 import { ImageText } from "./image-text";
 import { LongText } from "./long-text";
 import { Embed } from "./embed";
+import { CalBooking } from "./cal-booking";
 
 export const Blocks = (props: Omit<Page, "id" | "_sys" | "_values">) => {
   if (!props.blocks) return null;
@@ -45,6 +46,8 @@ case "PageBlocksFeatures":
       return <LongText data={block} />;
     case "PageBlocksEmbed":
       return <Embed data={block} />;
+    case "PageBlocksCalBooking":
+      return <CalBooking data={block} />;
     default:
       return null;
   }
