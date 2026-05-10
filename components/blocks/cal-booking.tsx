@@ -30,9 +30,8 @@ export const CalBooking = ({ data }: { data: PageBlocksCalBooking }) => {
       (function (C: any, A: string, L: string) {
         const p = (a: any, ar: any) => { a.q.push(ar); };
         const d = C.document;
-        C.Cal = C.Cal || function () {
+        C.Cal = C.Cal || function (...ar: any[]) {
           const cal = C.Cal;
-          const ar = arguments;
           if (!cal.loaded) {
             cal.ns = {};
             cal.q = cal.q || [];
@@ -40,7 +39,7 @@ export const CalBooking = ({ data }: { data: PageBlocksCalBooking }) => {
             cal.loaded = true;
           }
           if (ar[0] === L) {
-            const api: any = function () { p(api, arguments); };
+            const api: any = (...args: any[]) => { p(api, args); };
             const namespace = ar[1];
             api.q = [];
             if (typeof namespace === "string") {
