@@ -75,7 +75,7 @@ export const CalBooking = ({ data }: { data: PageBlocksCalBooking }) => {
 
   return (
     <Section background={data.background!}>
-      <div className="max-w-screen-md mx-auto" data-tina-field={tinaField(data, "url")}>
+      <div className="max-w-screen-xl mx-auto" data-tina-field={tinaField(data, "url")}>
         {data.title && (
           <h2
             className="font-headline text-4xl md:text-5xl text-on-surface mb-12"
