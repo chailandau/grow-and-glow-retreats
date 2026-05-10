@@ -18,7 +18,14 @@ declare global {
 }
 
 export const CalBooking = ({ data }: { data: CalBookingData }) => {
-  const calLink = data.url?.replace("https://cal.com/", "") ?? "";
+  const calLink = (() => {
+    if (!data.url) return "";
+    try {
+      return new URL(data.url).pathname.replace(/^\//, "");
+    } catch {
+      return data.url.replace(/^\//, "");
+    }
+  })();
   const elementId = `cal-inline-${calLink.replace(/\//g, "-")}`;
 
   useEffect(() => {
@@ -38,7 +45,7 @@ export const CalBooking = ({ data }: { data: CalBookingData }) => {
             cal.loaded = true;
           }
           if (ar[0] === L) {
-            const api = function () { p(api, arguments); };
+            const api: any = function () { p(api, arguments); };
             const namespace = ar[1];
             api.q = [];
             if (typeof namespace === "string") {
@@ -55,11 +62,19 @@ export const CalBooking = ({ data }: { data: CalBookingData }) => {
       })(window, "https://app.cal.com/embed/embed.js", "init");
     }
 
-    window.Cal("init", { origin: "https://cal.com" });
+    // Only call init once per page load
+    if (!window.Cal.initialized) {
+      window.Cal("init", { origin: "https://cal.com" });
+      window.Cal.initialized = true;
+    }
     window.Cal("inline", {
       elementOrSelector: `#${elementId}`,
       calLink,
     });
+    return () => {
+      const el = document.getElementById(elementId);
+      if (el) el.innerHTML = "";
+    };
   }, [calLink, elementId]);
 
   if (!data.url) return null;
@@ -77,7 +92,7 @@ export const CalBooking = ({ data }: { data: CalBookingData }) => {
         )}
         <div
           id={elementId}
-          style={{ width: "100%", height: "100%", overflow: "scroll" }}
+          className="w-full min-h-[700px] overflow-auto"
         />
       </div>
     </Section>
@@ -88,6 +103,7 @@ export const calBookingBlockSchema: Template = {
   name: "calBooking",
   label: "Cal.com Booking",
   ui: {
+    previewSrc: "/blocks/cal-booking.png",
     defaultItem: {
       background: "bg-surface",
       title: "",
