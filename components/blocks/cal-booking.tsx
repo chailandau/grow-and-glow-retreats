@@ -3,13 +3,7 @@ import React, { useEffect } from "react";
 import type { Template } from "tinacms";
 import { tinaField } from "tinacms/dist/react";
 import { Section, sectionBlockSchemaField } from "../layout/section";
-
-// Placeholder type — replaced with generated type in Task 2
-type CalBookingData = {
-  background?: string | null;
-  title?: string | null;
-  url?: string | null;
-};
+import { PageBlocksCalBooking } from "@/tina/__generated__/types";
 
 declare global {
   interface Window {
@@ -17,7 +11,7 @@ declare global {
   }
 }
 
-export const CalBooking = ({ data }: { data: CalBookingData }) => {
+export const CalBooking = ({ data }: { data: PageBlocksCalBooking }) => {
   const calLink = (() => {
     if (!data.url) return "";
     try {
@@ -81,11 +75,11 @@ export const CalBooking = ({ data }: { data: CalBookingData }) => {
 
   return (
     <Section background={data.background!}>
-      <div className="max-w-screen-md mx-auto" data-tina-field={tinaField(data as any, "url")}>
+      <div className="max-w-screen-md mx-auto" data-tina-field={tinaField(data, "url")}>
         {data.title && (
           <h2
             className="font-headline text-4xl md:text-5xl text-on-surface mb-12"
-            data-tina-field={tinaField(data as any, "title")}
+            data-tina-field={tinaField(data, "title")}
           >
             {data.title}
           </h2>
