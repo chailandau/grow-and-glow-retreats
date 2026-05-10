@@ -8,6 +8,7 @@ import { testimonialBlockSchema } from '@/components/blocks/testimonial';
 import { textBlockSchema } from '@/components/blocks/call-to-action';
 import { longTextBlockSchema } from '@/components/blocks/long-text';
 import { embedBlockSchema } from '@/components/blocks/embed';
+import { calBookingBlockSchema } from '@/components/blocks/cal-booking';
 
 const Page: Collection = {
   label: 'Pages',
@@ -45,6 +46,7 @@ const Page: Collection = {
         statsBlockSchema,
         longTextBlockSchema,
         embedBlockSchema,
+        calBookingBlockSchema,
       ],
     },
   ],
