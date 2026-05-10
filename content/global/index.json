@@ -28,6 +28,10 @@
       {
         "href": "/contact",
         "label": "Contact"
+      },
+      {
+        "href": "book-call",
+        "label": "Book a call"
       }
     ]
   },
