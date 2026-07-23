@@ -83,12 +83,6 @@ export const textBlockSchema: Template = {
                     style: "button",
                     page: "content/pages/home.mdx",
                 },
-                {
-                    type: "internal",
-                    label: "Learn More",
-                    style: "link",
-                    page: "content/pages/about.mdx",
-                },
             ],
         },
     },

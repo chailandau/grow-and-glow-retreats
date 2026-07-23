@@ -140,14 +140,7 @@ export const imageTextBlockSchema: Template = {
       title: 'Rooted in Nature, Guided by Light',
       subtitle: '',
       text: 'Every retreat is designed to help you slow down, reconnect, and rediscover the quiet strength within. Set among rolling hills and ancient woodlands, our spaces invite deep restoration.',
-      actions: [
-        {
-          type: 'internal',
-          label: 'Learn More',
-          style: 'link',
-          page: 'content/pages/about.mdx',
-        },
-      ],
+      actions: [],
       image: {
         src: '/uploads/retreat.jpg',
         alt: 'Peaceful retreat setting surrounded by nature',

@@ -108,12 +108,6 @@ export const heroBlockSchema: Template = {
           style: 'button',
           page: 'content/pages/home.mdx',
         },
-        {
-          type: 'internal',
-          label: 'Our Story',
-          style: 'link',
-          page: 'content/pages/about.mdx',
-        },
       ],
       image: {
         src: '/uploads/retreat.jpg',
