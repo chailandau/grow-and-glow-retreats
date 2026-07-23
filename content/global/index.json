@@ -22,12 +22,8 @@
         "label": "Meet Chav"
       },
       {
-        "href": "/retreats",
-        "label": "Retreats"
-      },
-      {
-        "href": "book-call",
-        "label": "Book a call"
+        "href": "offerings",
+        "label": "Offerings"
       },
       {
         "href": "/contact",
