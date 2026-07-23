@@ -188,7 +188,7 @@ export function resolveActionHref(action: {
     return action.link || '#';
   }
   // Internal: convert reference path to URL
-  // "content/pages/about.mdx" → "/about"
+  // "content/pages/meet-chav.mdx" → "/about"
   // "content/pages/home.mdx" → "/"
   if (!action.page) return '#';
   const slug = action.page
@@ -284,7 +284,7 @@ actions: [
     label: 'Our Story',
     type: 'link',
     linkType: 'internal',
-    page: 'content/pages/about.mdx',
+    page: 'content/pages/meet-chav.mdx',
     link: '',
   },
 ],
@@ -369,7 +369,7 @@ actions: [
     label: 'Learn More',
     type: 'link',
     linkType: 'internal',
-    page: 'content/pages/about.mdx',
+    page: 'content/pages/meet-chav.mdx',
     link: '',
   },
 ],
@@ -457,7 +457,7 @@ actions: [
         label: 'Learn More',
         type: 'link',
         linkType: 'internal',
-        page: 'content/pages/about.mdx',
+        page: 'content/pages/meet-chav.mdx',
         link: '',
     },
 ],
@@ -481,10 +481,10 @@ git commit -m "refactor: update call-to-action block to use shared actions schem
 
 Each existing action needs `linkType` and either `page` or `link` depending on the target. Current actions in `home.mdx`:
 
-1. Hero "I'm ready" → `link: /about` → internal, page: `content/pages/about.mdx`
+1. Hero "I'm ready" → `link: /about` → internal, page: `content/pages/meet-chav.mdx`
 2. ImageText "Apply to Ignite" → `link: /apply` → external (no `/apply` page exists yet), keep link
 3. ImageText "Reserve your spot" → `link: /apply` → external, keep link
-4. ImageText "Learn More" → `link: /about` → internal, page: `content/pages/about.mdx`
+4. ImageText "Learn More" → `link: /about` → internal, page: `content/pages/meet-chav.mdx`
 5. Text "Get Started" → `link: /` → internal, page: `content/pages/home.mdx`
 6. Text "Book Demo" → `link: https://tina.io` → external, keep link
 
@@ -496,7 +496,7 @@ Updated `home.mdx` actions (only showing the changed action blocks):
       - label: I'm ready
         type: button
         linkType: internal
-        page: content/pages/about.mdx
+        page: content/pages/meet-chav.mdx
 ```
 
 **First imageText block (line 39-42):**
@@ -523,7 +523,7 @@ Updated `home.mdx` actions (only showing the changed action blocks):
       - label: Learn More
         type: link
         linkType: internal
-        page: content/pages/about.mdx
+        page: content/pages/meet-chav.mdx
 ```
 
 **Text/CTA block (line 100-106):**
